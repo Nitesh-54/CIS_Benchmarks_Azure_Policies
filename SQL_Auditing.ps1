@@ -234,6 +234,63 @@ function SQL4_2_5 {
     }
 }
 
+function SQL_4_3_1 {
+    try {
+        $effectedResources = @()
+        $PostGreSQLServerInfo = Get-AzPostgreSqlServer
+        foreach ($name in $PostGreSQLServerInfo) {
+            if ($name.SslEnforcement -ne 'Enabled') {
+                $effectedResources += $name.Name
+            }
+        }
+        $desc = "Enable SSL connection on PostgreSQL Servers."
+        $rem = "Ensure 'Enforce SSL connection' is set to 'ENABLED' for PostgreSQL Database Server"
+        AddToExportArray -type "PostGreSQLServerInfo" -cisid "4.3.1" -description $desc -subSeverity "Medium" -status (StatusCheck -inputArray $effectedResources) -remidiation $rem -effectedResource $effectedResources
+    }
+    catch {
+        Write-Host (Get-Date -UFormat '%y_%m_%d') '- The following error occured: '
+        Write-Host $_
+    }
+}
+
+function SQL_4_3_8 {
+    try {
+        $effectedResources = @()
+        $PostGreSQLServerInfo = Get-AzPostgreSqlServer
+        foreach ($name in $PostGreSQLServerInfo) {
+            if($name.InfrastructureEncryption -ne 'Enabled') {
+                $effectedResources += $name.Name
+            }
+        }
+        $desc = "Enable encryption at rest for PostgreSQL Databases."
+        $rem = "Ensure 'Infrastructure double encryption' for PostgreSQL Database Server is 'Enabled'"
+        AddToExportArray -type "PostGreSQLServerInfo" -cisid "4.3.8" -description $desc -subSeverity "Medium" -status (StatusCheck -inputArray $effectedResources) -remidiation $rem -effectedResource $effectedResources
+    }
+    catch {
+        Write-Host (Get-Date -UFormat '%y_%m_%d') '- The following error occured: '
+        Write-Host $_
+    }
+}
+
+function SQL_4_4_1 {
+    try {
+        $effectedResources = @()
+            $SQLServerInformation = Get-AzMySqlServer
+            foreach ($name in $SQLServerInformation) {
+            if ($name.SslEnforcement -ne 'Enabled') {
+                $effectedResources += $name.Name
+            }
+        }
+        $desc = "Enable SSL connection on MYSQL Servers."
+        $rem = "Ensure 'Enforce SSL connection' is set to 'Enabled' for Standard MySQL Database Server"
+        AddToExportArray -type "SQLServerInformation" -cisid "4.4.1" -description $desc -subSeverity "Medium" -status (StatusCheck -inputArray $effectedResources) -remidiation $rem -effectedResource $effectedResources
+    }
+    catch {
+        Write-Host (Get-Date -UFormat '%y_%m_%d') '- The following error occured: '
+        Write-Host $_
+    }
+}
+
 function StatusCheck {
     param (
         $inputArray    
@@ -297,6 +354,13 @@ try {
     SQL4_2_3 > $null
     SQL4_2_4 > $null
     SQL4_2_5 > $null
+
+    #PostGreSQLServerInfo
+    SQL_4_3_1 > $null
+    SQL_4_3_8 > $null
+
+    #SQLServerInformation
+    SQL_4_4_1 > $null
 
     $global:exportArray
 }

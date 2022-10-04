@@ -1,42 +1,25 @@
 $global:exportArray = New-Object System.Collections.ArrayList
 
-# function SQL_4_4_1 {
-#     try {
-#         $effectedResources = @()
-#         $SQLServerList = Get-AzSqlServer
-#         foreach ($name in $SQLServerList) {
-#             $SQLServerInformation = Get-AzMySqlServer -ResourceGroupName $name.ResourceGroupName
-#             if ($SQLServerInformation.SslEnforcement -eq 'Disabled') {
-#                 $effectedResources += $SQLServerInformation.Name
-#             }
-#         }
-#         $desc = "Enable SSL connection on MYSQL Servers."
-#         $rem = "Ensure 'Enforce SSL connection' is set to 'Enabled' for Standard MySQL Database Server"
-#         AddToExportArray -type "SQLServerInformation" -cisid "4.4.1" -description $desc -subSeverity "Medium" -status (StatusCheck -inputArray $effectedResources) -remidiation $rem -effectedResource $effectedResources
-#     }
-#     catch {
-#         Write-Host (Get-Date -UFormat '%y_%m_%d') '- The following error occured: '
-#         Write-Host $_
-#     }
-# }
-function SQL_4_4_2 {
+
+function SQL_4_3_8 {
     try {
         $effectedResources = @()
-            $SQLServerInformation = Get-AzMySqlFlexibleServer
-            if ($SQLServerInformation) {
-                if ($SQLServerInformation.Version -ne 'TLSV1.2') {
-                    $effectedResources += $SQLServerInformation.ServerName
-                }
+        $SQLServerList = Get-AzPostgreSqlServer
+        foreach ($name in $SQLServerList) {
+            if($name) {
+                $effectedResources += $name.Name
             }
-        $desc = "Ensure TLS version on MySQL flexible servers is set to the default value."
-        $rem = "Ensure 'TLS Version' is set to 'TLSV1.2' for MySQL flexible Database Server"
-        AddToExportArray -type "SQLServerInformation" -cisid "4.4.2" -description $desc -subSeverity "Medium" -status (StatusCheck -inputArray $effectedResources) -remidiation $rem -effectedResource $effectedResources
+        }
+        $desc = "Enable Vulnerability Assessment (VA) setting 'Also send email notifications to admins and subscription owners'."
+        $rem = "Ensure that Vulnerability Assessment (VA) setting 'Also send email notifications to admins and subscription owners' is set for each SQL Server"
+        AddToExportArray -type "SQLServerVulnerabilityAssessmentSettings" -cisid "4.3.8" -description $desc -subSeverity "Medium" -status (StatusCheck -inputArray $effectedResources) -remidiation $rem -effectedResource $effectedResources
     }
     catch {
         Write-Host (Get-Date -UFormat '%y_%m_%d') '- The following error occured: '
         Write-Host $_
     }
 }
+
 
 function StatusCheck {
     param (
@@ -79,8 +62,7 @@ function AddToExportArray {
 
 try {
     
-    # SQL_4_4_1
-    SQL_4_4_2
+    SQL_4_3_8 > $null
 
     $global:exportArray
 }
