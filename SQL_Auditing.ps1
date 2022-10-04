@@ -272,31 +272,31 @@ function AddToExportArray {
 try {
 
     #SQLServerAuditingSettings
-    SQL4_1_1
+    SQL4_1_1 > $null
 
     #SQLServerFirewallRules
-    SQL4_1_2
+    SQL4_1_2 > $null
 
     #SQLTDEProtector
-    SQL4_1_3
+    SQL4_1_3 > $null
 
     #SQLServer_AD_Admin_info
-    SQL4_1_4
+    SQL4_1_4 > $null
 
     #SQLServerDatabasesList
-    SQL4_1_5
+    SQL4_1_5 > $null
 
     #SQLServerAuditingSettings
-    SQL4_1_6
+    SQL4_1_6 > $null
 
     #SQLServerThreatProtection
-    SQL4_2_1
+    SQL4_2_1 > $null
 
     #SQLServerVulnerabilityAssessmentSettings
-    SQL4_2_2
-    SQL4_2_3
-    SQL4_2_4
-    SQL4_2_5
+    SQL4_2_2 > $null
+    SQL4_2_3 > $null
+    SQL4_2_4 > $null
+    SQL4_2_5 > $null
 
     $global:exportArray
 }
