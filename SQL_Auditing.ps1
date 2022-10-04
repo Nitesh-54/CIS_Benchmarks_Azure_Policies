@@ -277,6 +277,7 @@ try {
     #SQLServerFirewallRules
     SQL4_1_2
 
+    #SQLTDEProtector
     SQL4_1_3
 
     #SQLServer_AD_Admin_info
@@ -288,7 +289,10 @@ try {
     #SQLServerAuditingSettings
     SQL4_1_6
 
+    #SQLServerThreatProtection
     SQL4_2_1
+
+    #SQLServerVulnerabilityAssessmentSettings
     SQL4_2_2
     SQL4_2_3
     SQL4_2_4
